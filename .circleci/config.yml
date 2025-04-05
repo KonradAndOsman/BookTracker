@@ -38,6 +38,9 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: audit-packages
+          command: npm audit
+      - run:
           name: docker-login
           command: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - run:
