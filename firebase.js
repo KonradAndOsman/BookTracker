@@ -1,5 +1,6 @@
-const firebase = require('firebase/app');
-require('firebase/firestore');
+// Import the required Firebase modules
+const { initializeApp } = require('firebase/app');
+const { getFirestore } = require('firebase/firestore');
 
 // Firebase configurations
 const firebaseConfig = {
@@ -13,8 +14,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = getFirestore(app);
 
 // Export Firestore for the application
-const db = firebase.firestore();
 module.exports = db;
