@@ -1,8 +1,7 @@
-# syntax=docker/dockerfile:1
 FROM cimg/node:14.21.3
 
-# Upgrade npm to the latest version
-RUN npm install -g npm@latest
+# Install a compatible version of npm
+RUN npm install -g npm@8
 
 # Set environment variables
 ENV NODE_ENV=production
