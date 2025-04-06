@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const { collection, addDoc, doc, updateDoc, deleteDoc } = require('firebase/firestore');
 const db = require('../firebase'); // Import Firestore
 
-// Add book
+// Add new book
 router.post('/add', async (req, res) => {
   const { name, author, year } = req.body;
   try {
-    await db.collection('books').add({ name, author, year });
+    await addDoc(collection(db, 'books'), { name, author, year });
     res.redirect('/');
   } catch (error) {
     console.error("Error adding book:", error);
@@ -14,12 +15,13 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// Edit a book
+// Edit an existing book
 router.post('/edit/:id', async (req, res) => {
   const { id } = req.params;
   const { name, author, year } = req.body;
   try {
-    await db.collection('books').doc(id).update({ name, author, year });
+    const bookRef = doc(db, 'books', id);
+    await updateDoc(bookRef, { name, author, year });
     res.redirect('/');
   } catch (error) {
     console.error("Error editing book:", error);
@@ -31,7 +33,8 @@ router.post('/edit/:id', async (req, res) => {
 router.post('/delete/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    await db.collection('books').doc(id).delete();
+    const bookRef = doc(db, 'books', id);
+    await deleteDoc(bookRef);
     res.redirect('/');
   } catch (error) {
     console.error("Error deleting book:", error);
