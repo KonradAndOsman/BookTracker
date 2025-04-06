@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../src/config/firebase'); // Import Firestore
+const db = require('../firebase'); // Import Firestore
 
 // Add book
 router.post('/add', async (req, res) => {
