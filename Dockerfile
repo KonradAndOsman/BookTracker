@@ -2,7 +2,7 @@
 FROM cimg/node:22.9.0
 
 # Upgrade npm to the latest version
-RUN npm install -g npm@latest
+RUN sudo npm install -g npm@latest
 
 # Set environment variables
 ENV NODE_ENV=production
