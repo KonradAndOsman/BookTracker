@@ -5,7 +5,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <form action="/add" method="POST">
+    <form action="/books/add" method="POST">
       <input type="text" name="name" placeholder="Book Name" required />
       <input type="text" name="author" placeholder="Author" required />
       <input type="number" name="year" placeholder="Year" required />
@@ -15,13 +15,13 @@
       <% books.forEach(book => { %>
         <li>
           <strong><%= book.name %></strong> by <%= book.author %> (<%= book.year %>)
-          <form action="/edit/<%= book.id %>" method="POST" style="display:inline;">
+          <form action="/books/edit/<%= book.id %>" method="POST" style="display:inline;">
             <input type="text" name="name" value="<%= book.name %>" required />
             <input type="text" name="author" value="<%= book.author %>" required />
             <input type="number" name="year" value="<%= book.year %>" required />
             <button type="submit">Edit</button>
           </form>
-          <form action="/delete/<%= book.id %>" method="POST" style="display:inline;">
+          <form action="/books/delete/<%= book.id %>" method="POST" style="display:inline;">
             <button type="submit">Delete</button>
           </form>
         </li>

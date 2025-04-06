@@ -1,15 +1,21 @@
 var express = require('express');
 var router = express.Router();
-
-// to test if this fixes the website displaying properly
-const books = [
-  { id: 1, name: 'Sample Book 1', author: 'Author 1', year: 2021 },
-  { id: 2, name: 'Sample Book 2', author: 'Author 2', year: 2022 }
-];
+const { collection, getDocs } = require('firebase/firestore');
+const db = require('../firebase'); // Import Firestore
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: "BookTracker", books });
+router.get('/', async function (req, res, next) {
+  try {
+    // Fetch books from Firestore
+    const booksSnapshot = await getDocs(collection(db, 'books'));
+    const books = booksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Page with Firestore data
+    res.render('index', { title: "BookTracker", books });
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    res.render('error', { message: "Error fetching books", error });
+  }
 });
 
 module.exports = router;
