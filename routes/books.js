@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { collection, addDoc, doc, updateDoc, deleteDoc } = require('firebase/firestore');
-const db = require('../firebase'); // Import Firestore
+const db = require('../firebase'); // Import Firestore instance from firebase.js
 
 // Add new book
 router.post('/add', async (req, res) => {
   const { name, author, year } = req.body;
   try {
+    // Use the modular API to add a document to the "books" collection
     await addDoc(collection(db, 'books'), { name, author, year });
     res.redirect('/');
   } catch (error) {
@@ -20,6 +21,7 @@ router.post('/edit/:id', async (req, res) => {
   const { id } = req.params;
   const { name, author, year } = req.body;
   try {
+    // Use the modular API to get a reference to the document and update it
     const bookRef = doc(db, 'books', id);
     await updateDoc(bookRef, { name, author, year });
     res.redirect('/');
@@ -33,6 +35,7 @@ router.post('/edit/:id', async (req, res) => {
 router.post('/delete/:id', async (req, res) => {
   const { id } = req.params;
   try {
+    // Use the modular API to get a reference to the document and delete it
     const bookRef = doc(db, 'books', id);
     await deleteDoc(bookRef);
     res.redirect('/');
