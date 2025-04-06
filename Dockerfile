@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM circleci/node:20-browsers
+FROM cimg/node:20.14.0
 ENV NODE_ENV=production
 COPY ["package.json", "package-lock.json*", "./"]
 RUN sudo npm install
