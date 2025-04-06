@@ -6,6 +6,9 @@ body {
   margin: 0;
   padding: 20px;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content horizontally */
 }
 
 /* Header styling */
@@ -25,14 +28,30 @@ form {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+form[action="/books/add"] {
+  margin: 0 auto;
+  max-width: 400px;
+}
+
 form input[type="text"],
-form input[type="number"] {
+form input[type="number"],
+form textarea {
   width: calc(100% - 20px);
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
+}
+
+form textarea {
+  resize: vertical; /* Allow vertical resizing */
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: #00B7FF;
+  outline: none;
 }
 
 form button {
@@ -69,13 +88,20 @@ ul li strong {
   color: #444;
 }
 
+ul li p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
 /* Inline forms for edit and delete */
 form[style="display:inline;"] {
   display: inline-block;
   margin-left: 10px;
 }
 
-form[style="display:inline;"] input {
+form[style="display:inline;"] input,
+form[style="display:inline;"] textarea {
   width: auto;
   padding: 5px;
   margin: 0 5px;
@@ -102,9 +128,12 @@ form[action="/books/add"] {
   max-width: 400px;
 }
 
-/* Centered layout */
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Footer styling */
+footer {
+  margin-top: 50px;
+  padding: 20px;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  font-size: 12px;
 }
