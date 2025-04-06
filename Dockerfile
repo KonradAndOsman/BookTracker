@@ -1,18 +1,28 @@
 # syntax=docker/dockerfile:1
 FROM cimg/node:22.9.0
 
-# Upgrade npm to the latest version
-RUN npm install -g npm@latest --unsafe-perm
+# 1. Set up proper permissions (no sudo needed)
+RUN mkdir -p /home/node/app && \
+    chown -R node:node /home/node/app && \
+    chown -R node:node /usr/local/lib/node_modules
 
-# Set environment variables
+# 2. Switch to node user
+USER node
+
+# 3. Set working directory
+WORKDIR /home/node/app
+
+# 4. Set environment variables
 ENV NODE_ENV=production
 
-# Copy package files and install dependencies
-COPY ["package.json", "package-lock.json*", "./"]
-RUN npm install --production --unsafe-perm
+# 5. Copy package files with correct ownership
+COPY --chown=node:node ["package.json", "package-lock.json*", "./"]
 
-# Copy the rest of the application files
-COPY . .
+# 6. Install production dependencies
+RUN npm install --production
 
-# Start the application
+# 7. Copy application files with correct ownership
+COPY --chown=node:node . .
+
+# 8. Runtime command
 CMD ["npm", "start"]
