@@ -5,7 +5,7 @@ const db = require('../firebase'); // Import Firestore instance from firebase.js
 
 // Add new book
 router.post('/add', async (req, res) => {
-  const { name, author, year, note } = req.body; // Include the note field
+  const { name, author, year, note } = req.body;
   try {
     // Use the modular API to add a document to the "books" collection
     await addDoc(collection(db, 'books'), { name, author, year, note }); // Save the note
