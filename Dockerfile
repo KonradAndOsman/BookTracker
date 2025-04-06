@@ -1,28 +1,20 @@
 # syntax=docker/dockerfile:1
 FROM cimg/node:22.9.0
 
-# 1. Set up proper permissions (no sudo needed)
-RUN mkdir -p /home/node/app && \
-    chown -R node:node /home/node/app && \
-    chown -R node:node /usr/local/lib/node_modules
-
-# 2. Switch to node user
-USER node
-
-# 3. Set working directory
-WORKDIR /home/node/app
-
-# 4. Set environment variables
+# Set environment variables
 ENV NODE_ENV=production
 
-# 5. Copy package files with correct ownership
-COPY --chown=node:node ["package.json", "package-lock.json*", "./"]
+# Set up user-specific npm installation to avoid permission issues
+ENV NPM_CONFIG_PREFIX=/home/circleci/.npm-global
+RUN npm install -g npm@latest --unsafe-perm
+ENV PATH=$PATH:/home/circleci/.npm-global/bin
 
-# 6. Install production dependencies
-RUN npm install --production
+# Copy package files and install dependencies
+COPY ["package.json", "package-lock.json*", "./"]
+RUN npm install --production --unsafe-perm
 
-# 7. Copy application files with correct ownership
-COPY --chown=node:node . .
+# Copy the rest of the application files
+COPY . .
 
-# 8. Runtime command
+# Start the application
 CMD ["npm", "start"]
