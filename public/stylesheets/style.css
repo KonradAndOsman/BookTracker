@@ -95,19 +95,41 @@ ul li p {
 }
 
 /* Inline forms for edit and delete */
-form[style="display:inline;"] {
-  display: inline-block;
-  margin-left: 10px;
+form[style="display:flex"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Add spacing between fields */
+  align-items: center; /* Align fields vertically */
 }
 
-form[style="display:inline;"] input,
-form[style="display:inline;"] textarea {
-  width: auto;
+form[style="display:flex"] input,
+form[style="display:flex"] textarea {
   padding: 5px;
-  margin: 0 5px;
-  font-size: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
+form[style="display:flex"] textarea {
+  resize: vertical; /* Allow vertical resizing */
+  flex: 1; /* Make the textarea take up remaining space */
+}
+
+form[style="display:flex"] button {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #00b7ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form[style="display:flex"] button:hover {
+  background-color: #0056b3;
+}
+
+/* Delete button styling */
 form[style="display:inline;"] button {
   padding: 5px 10px;
   font-size: 12px;
@@ -120,12 +142,6 @@ form[style="display:inline;"] button {
 
 form[style="display:inline;"] button:hover {
   background-color: #cc0000;
-}
-
-/* Add Book Form */
-form[action="/books/add"] {
-  margin: 0 auto;
-  max-width: 400px;
 }
 
 /* Footer styling */

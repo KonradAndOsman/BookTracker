@@ -16,14 +16,15 @@ router.post('/add', async (req, res) => {
   }
 });
 
+
 // Edit an existing book
 router.post('/edit/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, author, year } = req.body;
+  const { name, author, year, note } = req.body; // Include the note field
   try {
     // Use the modular API to get a reference to the document and update it
     const bookRef = doc(db, 'books', id);
-    await updateDoc(bookRef, { name, author, year });
+    await updateDoc(bookRef, { name, author, year, note }); // Update the note
     res.redirect('/');
   } catch (error) {
     console.error("Error editing book:", error);
